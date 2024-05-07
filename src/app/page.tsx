@@ -51,15 +51,15 @@ export default function Home() {
   for (let i = 0; i < restaurants.length; i++) {
     const restaurant = restaurants[i];
     restaurantElements.push(
-      <RestaurantInfo
-        key={i}
-        restaurantName={restaurant.restaurantName}
-        visitDate={restaurant.visitDate}
-        pizzaType={restaurant.pizzaType}
-        rating={restaurant.rating}
-        country={restaurant.country}
-        place={restaurant.place}
-      />
+      // <RestaurantInfo
+      //   key={i}
+      //   restaurantName={restaurant.restaurantName}
+      //   visitDate={restaurant.visitDate}
+      //   pizzaType={restaurant.pizzaType}
+      //   rating={restaurant.rating}
+      //   country={restaurant.country}
+      //   place={restaurant.place}
+      // />
     );
   }
 

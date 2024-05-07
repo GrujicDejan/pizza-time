@@ -48,13 +48,29 @@ export default function SwiperComponent() {
       country: "Serbia",
       place: "Novi Sad",
     },
+    {
+      restaurantName: "Restaurant 6",
+      visitDate: "22.03.2024",
+      pizzaType: "Funghi",
+      rating: 4.5,
+      country: "Serbia",
+      place: "Novi Sad",
+    },
+    {
+      restaurantName: "Restaurant 7",
+      visitDate: "22.03.2024",
+      pizzaType: "Funghi",
+      rating: 4.5,
+      country: "Serbia",
+      place: "Novi Sad",
+    },
   ];
 
   return (
     <div className="w-11/12 lg:w-9/12 mx-auto">
-      {/* <p className="text-3xl font-bold mb-8 mt-8 lg:mb-10 lg:mt-12 text-center">
-        Restaurants
-      </p> */}
+      <p className="text-3xl font-bold mb-8 mt-8 lg:mb-10 lg:mt-12 text-center text-yellow-400">
+        Reviews
+      </p>
       <div className="overflow-hidden">
         <Swiper
           loop={true}
@@ -65,6 +81,7 @@ export default function SwiperComponent() {
             430: { slidesPerView: 1 },
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 },
           }}
         >
           {restaurantList.map((restaurant, index) => (
@@ -74,6 +91,7 @@ export default function SwiperComponent() {
             >
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <RestaurantInfo
+                  index={index}
                   restaurantName={restaurant.restaurantName}
                   visitDate={restaurant.visitDate}
                   pizzaType={restaurant.pizzaType}

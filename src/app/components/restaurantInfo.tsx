@@ -1,6 +1,8 @@
 import React from "react";
+import pizza1 from "../../../public/images/pizza1.png";
 
 interface Props {
+  index: number;
   restaurantName: string;
   visitDate: string;
   pizzaType: string;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 const RestaurantInfo: React.FC<Props> = ({
+  index,
   restaurantName,
   visitDate,
   pizzaType,
@@ -20,17 +23,35 @@ const RestaurantInfo: React.FC<Props> = ({
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating - fullStars >= 0.5;
 
+  const stickers = [
+    "images/pizza1.png",
+    "images/pizza2.png",
+    "images/pizza3.png",
+    "images/sir.png",
+    "images/pizza4.png",
+    "images/pizza5.png",
+  ];
+
   return (
-    <div className="mx-4">
-      <div className="h-[290px] bg-cover bg-no-repeat p-4 bg-[url('../../public/images/paper.png')] flex flex-col justify-between">
+    <div className="mx-4 relative">
+      <div className="h-[300px] bg-cover bg-no-repeat p-4 bg-[url('../../public/images/paper.png')] flex flex-col justify-between">
         <div>
+          <div className="absolute top-0 right-0 ">
+            <img
+              src={stickers[index % 6]}
+              alt="Sticker"
+              className="w-16 h-16"
+            />
+          </div>
           <h2 className="text-lg font-bold mb-2 pt-8 text-center">
             {restaurantName}
           </h2>
 
           <br />
 
-          <p className="text-gray-600 m-2">Place: {place}, {country}</p>
+          <p className="text-gray-600 m-2">
+            Place: {place}, {country}
+          </p>
           <p className="text-gray-600 m-2">Pizza Type: {pizzaType}</p>
           <p className="text-gray-600 m-2">Visit Date: {visitDate}</p>
 
@@ -48,7 +69,7 @@ const RestaurantInfo: React.FC<Props> = ({
         </div>
 
         <div className="flex items-center justify-center pb-4 mb-12">
-          <p className="text-gray-600">Rating: {rating}</p>
+          <p className="text-gray-600 text-sm">{rating}</p>
           <ul className="flex ml-2">
             {Array(fullStars)
               .fill(null)
