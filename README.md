@@ -11,6 +11,7 @@ View Ratings: View the ratings you've assigned to different pizzas to keep track
 - **Next.js Framework:** Enjoy the benefits of server-side rendering, automatic code splitting, and a delightful development experience with Next.js.
 - **Tailwind CSS:** A utility-first CSS framework that enables rapid and responsive styling, ensuring your photographer's work is presented in a visually stunning and accessible manner.
 - **Responsive Design:** The website adapts gracefully to various screen sizes and devices, providing an optimal viewing experience for users on desktops, tablets, and smartphones.
+- **Supabase:** A platform for working with data. Supabase provides a comprehensive set of tools for building applications, including a database, authentication, authorization, API creation, and much more, making development and maintenance of applications easier.
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
