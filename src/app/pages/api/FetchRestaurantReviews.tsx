@@ -1,5 +1,5 @@
-import supabase from "../pages/supabase";
-import { RestaurantReview } from "../components/RestaurantReview";
+import supabase from "../supabase";
+import { RestaurantReview } from "../../components/RestaurantReview";
 
 const fetchRestaurantReviews = async (): Promise<RestaurantReview[] | null> => {
   try {
@@ -27,3 +27,4 @@ const fetchRestaurantReviews = async (): Promise<RestaurantReview[] | null> => {
 };
 
 export default fetchRestaurantReviews;
+
