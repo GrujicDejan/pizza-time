@@ -5,66 +5,21 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import RestaurantInfo from "../components/restaurantInfo";
+import { useEffect, useState } from "react";
+import { RestaurantReview } from "./RestaurantReview";
+import fetchRestaurantReviews from "../utils/supabaseClient";
 
 export default function SwiperComponent() {
-  const restaurantList = [
-    {
-      restaurantName: "Restaurant 1",
-      visitDate: "22.03.2024",
-      pizzaType: "Pepperoni",
-      rating: 4.7,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-    {
-      restaurantName: "Restaurant 2",
-      visitDate: "22.03.2024",
-      pizzaType: "Margherita",
-      rating: 4.5,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-    {
-      restaurantName: "Restaurant 3",
-      visitDate: "22.03.2024",
-      pizzaType: "Quattro Stagioni",
-      rating: 4.2,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-    {
-      restaurantName: "Restaurant 4",
-      visitDate: "22.03.2024",
-      pizzaType: "Capricciosa",
-      rating: 4.5,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-    {
-      restaurantName: "Restaurant 5",
-      visitDate: "22.03.2024",
-      pizzaType: "Funghi",
-      rating: 4.5,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-    {
-      restaurantName: "Restaurant 6",
-      visitDate: "22.03.2024",
-      pizzaType: "Funghi",
-      rating: 4.5,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-    {
-      restaurantName: "Restaurant 7",
-      visitDate: "22.03.2024",
-      pizzaType: "Funghi",
-      rating: 4.5,
-      country: "Serbia",
-      place: "Novi Sad",
-    },
-  ];
+
+    const [restaurants, setRestaurants] = useState<RestaurantReview[] | null>(null);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchRestaurantReviews(); 
+      setRestaurants(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="w-11/12 lg:w-9/12 mx-auto">
@@ -84,7 +39,7 @@ export default function SwiperComponent() {
             1280: { slidesPerView: 4 },
           }}
         >
-          {restaurantList.map((restaurant, index) => (
+          {restaurants != null && restaurants.map((restaurant, index) => (
             <SwiperSlide
               key={index}
               className="flex flex-col items-center justify-center "
