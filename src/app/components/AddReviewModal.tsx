@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import fetchRestaurantReviews from "../pages/api/FetchRestaurantReviews";
+import { addRestuarantReview } from "../pages/api/addRestuarantReview";
 
 interface AddReviewModalProps {
   isOpen: boolean;
@@ -7,26 +7,26 @@ interface AddReviewModalProps {
 }
 
 interface FormData {
-  restaurantName: string;
-  pizzaType: string;
-  city: string;
-  country: string;
-  visitDate: string; // Dodajemo polje za unos datuma posete
-  rating: number;
+  restaurantName: any;
+  pizzaType: any;
+  place: any;
+  country: any;
+  visitDate: any;
+  rating: any;
 }
+
+const today = new Date();
+const defaultDate = today.toISOString().split("T")[0];
 
 const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
   const initialFormData: FormData = {
     restaurantName: "",
     pizzaType: "",
-    city: "",
+    place: "",
     country: "",
-    visitDate: "", // Inicijalna vrednost za datum posete
-    rating: 0,
+    visitDate: defaultDate, 
+    rating: "",
   };
-
-  const today = new Date();
-  const defaultDate = today.toISOString().split("T")[0];
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -41,23 +41,40 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/addRestuarantReview", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // const response = await fetch("/api/addRestuarantReview", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
 
-      if (response.ok) {
-        // Uspešno dodavanje recenzije
-        console.log("Review added successfully!");
-        setFormData(initialFormData);
-        onClose();
-      } else {
-        // Greška prilikom dodavanja recenzije
-        console.error("Failed to add review", response);
-      }
+      const response = async () => {
+        try {
+            const res = await addRestuarantReview({
+                method: 'POST',
+                body: formData,
+            });
+            console.log(res);
+            setFormData(initialFormData);
+            onClose();
+        } catch (error) {
+            console.error('Error adding review:', error);
+        }
+    };
+        
+    response();
+    
+
+      // if (response) {
+      //   // Uspešno dodavanje recenzije
+      //   console.log("Review added successfully!");
+      //   setFormData(initialFormData);
+      //   onClose();
+      // } else {
+      //   // Greška prilikom dodavanja recenzije
+      //   console.error("Failed to add review", response);
+      // }
     } catch (error) {
       console.error("Error adding review:", error);
     }
@@ -71,7 +88,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div
-          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          className="fixed inset-0 bg-gray-500 bg-opaplace-75 transition-opaplace"
           onClick={onClose}
         />
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -141,17 +158,17 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="mb-4">
                       <label
-                        htmlFor="city"
+                        htmlFor="place"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        City
+                        place
                       </label>
                       <input
                         type="text"
-                        name="city"
-                        id="city"
+                        name="place"
+                        id="place"
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                        value={formData.city}
+                        value={formData.place}
                         onChange={handleChange}
                         required
                       />

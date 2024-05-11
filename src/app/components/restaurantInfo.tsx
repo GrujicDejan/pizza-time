@@ -34,7 +34,7 @@ const RestaurantInfo: React.FC<Props> = ({
 
   return (
     <div className="mx-4 relative">
-      <div className="h-[300px] bg-cover bg-no-repeat p-4 bg-[url('../../public/images/paper.png')] flex flex-col justify-between">
+      <div className="h-[310px] bg-cover bg-no-repeat p-4 bg-[url('../../public/images/paper.png')] flex flex-col justify-between">
         <div>
           <div className="absolute top-0 right-0 ">
             <img
@@ -49,10 +49,10 @@ const RestaurantInfo: React.FC<Props> = ({
 
           <br />
 
-          <p className="text-gray-600 m-2">
+          <p className="text-gray-600 m-2 max-w-[180px]">
             Place: {place}, {country}
           </p>
-          <p className="text-gray-600 m-2">Pizza Type: {pizzaType}</p>
+          <p className="text-gray-600 m-2 max-w-[180px]">Pizza Type: {pizzaType}</p>
           <p className="text-gray-600 m-2">Visit Date: {visitDate}</p>
 
           <br />
