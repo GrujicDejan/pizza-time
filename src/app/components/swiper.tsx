@@ -7,7 +7,7 @@ import { Pagination } from "swiper/modules";
 import RestaurantInfo from "../components/restaurantInfo";
 import { useEffect, useState } from "react";
 import { RestaurantReview } from "./RestaurantReview";
-import fetchRestaurantReviews from "../utils/supabaseClient";
+import fetchRestaurantReviews from "../pages/api/FetchRestaurantReviews";
 
 export default function SwiperComponent() {
 

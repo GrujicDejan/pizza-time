@@ -1,7 +1,20 @@
-import RestaurantInfo from "./components/restaurantInfo";
+"use client";
+
+import React, { useState } from "react";
+import AddReviewModal from "./components/AddReviewModal";
 import SwiperComponent from "./components/swiper";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col justify-center items-center">
@@ -11,7 +24,17 @@ export default function Home() {
           alt="Header Image"
           width={300}
         />
+
+        <button
+          onClick={openModal}
+          className="bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Add New Review
+        </button>
+
         <SwiperComponent />
+
+        <AddReviewModal isOpen={isModalOpen} onClose={closeModal} />
       </div>
     </div>
   );
