@@ -10,12 +10,13 @@ import { RestaurantReview } from "./RestaurantReview";
 import fetchRestaurantReviews from "../pages/api/FetchRestaurantReviews";
 
 export default function SwiperComponent() {
+  const [restaurants, setRestaurants] = useState<RestaurantReview[] | null>(
+    null
+  );
 
-    const [restaurants, setRestaurants] = useState<RestaurantReview[] | null>(null);
-  
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchRestaurantReviews(); 
+      const data = await fetchRestaurantReviews();
       setRestaurants(data);
     };
     fetchData();
@@ -39,24 +40,25 @@ export default function SwiperComponent() {
             1280: { slidesPerView: 4 },
           }}
         >
-          {restaurants != null && restaurants.map((restaurant, index) => (
-            <SwiperSlide
-              key={index}
-              className="flex flex-col items-center justify-center "
-            >
-              <div className="w-full h-full flex flex-col items-center justify-center">
-                <RestaurantInfo
-                  index={index}
-                  restaurantName={restaurant.restaurantName}
-                  visitDate={restaurant.visitDate}
-                  pizzaType={restaurant.pizzaType}
-                  rating={restaurant.rating}
-                  country={restaurant.country}
-                  place={restaurant.place}
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+          {restaurants != null &&
+            restaurants.map((restaurant, index) => (
+              <SwiperSlide
+                key={index}
+                className="flex flex-col items-center justify-center "
+              >
+                <div className="w-full h-full flex flex-col items-center justify-center">
+                  <RestaurantInfo
+                    index={index}
+                    restaurantName={restaurant.restaurantName}
+                    visitDate={restaurant.visitDate}
+                    pizzaType={restaurant.pizzaType}
+                    rating={restaurant.rating}
+                    country={restaurant.country}
+                    place={restaurant.place}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
     </div>
