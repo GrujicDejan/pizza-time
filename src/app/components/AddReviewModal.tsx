@@ -4,6 +4,7 @@ import { addRestuarantReview } from "../pages/api/addRestuarantReview";
 interface AddReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmitSuccess: () => void;
 }
 
 interface FormData {
@@ -18,7 +19,7 @@ interface FormData {
 const today = new Date();
 const defaultDate = today.toISOString().split("T")[0];
 
-const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
+const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose, onSubmitSuccess }) => {
   const initialFormData: FormData = {
     restaurantName: "",
     pizzaType: "",
@@ -34,49 +35,36 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "rating") {
+      // Provera da li je uneta vrednost validan decimalni broj između 1 i 5
+      const floatValue = parseFloat(value);
+      if (floatValue >= 0 && floatValue <= 5) {
+        setFormData({ ...formData, [name]: value });
+      } else {
+        setFormData({...formData, [name]: ""})
+      }
+    } else {
+      // Ako nije polje rating, koristi vrednost kao što je
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      // const response = await fetch("/api/addRestuarantReview", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
+      const response = await addRestuarantReview({
+        method: 'POST',
+        body: formData,
+      });
+      
+      console.log(response);
+      setFormData(initialFormData);
+      onClose();
+      onSubmitSuccess();
 
-      const response = async () => {
-        try {
-            const res = await addRestuarantReview({
-                method: 'POST',
-                body: formData,
-            });
-            console.log(res);
-            setFormData(initialFormData);
-            onClose();
-        } catch (error) {
-            console.error('Error adding review:', error);
-        }
-    };
-        
-    response();
-    
-
-      // if (response) {
-      //   // Uspešno dodavanje recenzije
-      //   console.log("Review added successfully!");
-      //   setFormData(initialFormData);
-      //   onClose();
-      // } else {
-      //   // Greška prilikom dodavanja recenzije
-      //   console.error("Failed to add review", response);
-      // }
     } catch (error) {
-      console.error("Error adding review:", error);
+      console.error('Error adding review:', error);
     }
   };
 
@@ -144,14 +132,16 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
                       Rating (1-5)
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="rating"
                       id="rating"
-                      min="1"
+                      min="0"
                       max="5"
+                      pattern="^([0-5](\.\d{0,1})?|\.\d{1})?$"
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       value={formData.rating}
                       onChange={handleChange}
+                      title="Please enter a number between 0 and 5 with up to one decimal place."
                     />
                   </div>
                   {/* Mesto */}
@@ -236,3 +226,6 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default AddReviewModal;
+
+
+
