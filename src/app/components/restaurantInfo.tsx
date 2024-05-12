@@ -47,10 +47,10 @@ const RestaurantInfo: React.FC<Props> = ({
           <br />
 
           <p className="text-gray-600 m-2 max-w-[180px]">
-            Place: {place}, {country}
+            <strong>Place:</strong> {place}, {country}
           </p>
-          <p className="text-gray-600 m-2 max-w-[180px]">Pizza Type: {pizzaType}</p>
-          <p className="text-gray-600 m-2">Visit Date: {visitDate}</p>
+          <p className="text-gray-600 m-2 max-w-[180px]"><strong>Pizza Type:</strong> {pizzaType}</p>
+          <p className="text-gray-600 m-2"><strong>Visit Date:</strong> {visitDate}</p>
         </div>
 
         <div className="flex items-center justify-center pb-4 mb-12">

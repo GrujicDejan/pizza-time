@@ -7,7 +7,7 @@ export async function addRestuarantReview(req: { method: string; body: { restaur
       const { restaurantName, pizzaType, place, country, visitDate, rating } = req.body;
   
       // Dodavanje podataka u Supabase bazu
-      const { data, error } = await supabase.from('Restaurant').insert([
+      const { data, error } = await supabase.from('pizza_time').insert([
         {
           restaurant_name: restaurantName,
           pizza_type: pizzaType,

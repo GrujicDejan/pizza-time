@@ -19,7 +19,7 @@ const fetchRestaurantReviews = async (): Promise<RestaurantReview[] | null> => {
       place: item.place,
     }));
 
-    return mappedData;
+    return mappedData.reverse();
   } catch (error) {
     console.error("Error fetching restaurant reviews:", error);
     return null;
