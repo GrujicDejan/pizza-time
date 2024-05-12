@@ -34,7 +34,18 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "rating") {
+      // Provera da li je uneta vrednost validan decimalni broj između 1 i 5
+      const floatValue = parseFloat(value);
+      if (value !== ' ' && floatValue >= 0 && floatValue <= 5) {
+        setFormData({ ...formData, [name]: value });
+      } else {
+        setFormData({...formData, [name]: ""})
+      }
+    } else {
+      // Ako nije polje rating, koristi vrednost kao što je
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -144,14 +155,16 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
                       Rating (1-5)
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="rating"
                       id="rating"
-                      min="1"
+                      min="0"
                       max="5"
+                      pattern="^([0-5](\.\d{0,1})?|\.\d{1})?$"
                       className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                       value={formData.rating}
                       onChange={handleChange}
+                      title="Please enter a number between 0 and 5 with up to one decimal place."
                     />
                   </div>
                   {/* Mesto */}

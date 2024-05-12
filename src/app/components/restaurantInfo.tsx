@@ -6,7 +6,7 @@ interface Props {
   restaurantName: string;
   visitDate: string;
   pizzaType: string;
-  rating: number;
+  rating: number; // Promenjen tip polja rating iz string u number
   country: string;
   place: string;
 }
@@ -20,9 +20,6 @@ const RestaurantInfo: React.FC<Props> = ({
   country,
   place,
 }) => {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating - fullStars >= 0.5;
-
   const stickers = [
     "images/pizza1.png",
     "images/pizza2.png",
@@ -54,24 +51,12 @@ const RestaurantInfo: React.FC<Props> = ({
           </p>
           <p className="text-gray-600 m-2 max-w-[180px]">Pizza Type: {pizzaType}</p>
           <p className="text-gray-600 m-2">Visit Date: {visitDate}</p>
-
-          <br />
-
-          {/* <div className="flex flex-col sm:flex-row justify-between mb-2">
-            <p className="text-gray-600">Visit Date: {visitDate}</p>
-            <p className="text-gray-600 sm:ml-4">Pizza Type: {pizzaType}</p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row justify-between mb-2">
-            <p className="text-gray-600">Country: {country}</p>
-            <p className="text-gray-600 sm:ml-4">Place: {place}</p>
-          </div> */}
         </div>
 
         <div className="flex items-center justify-center pb-4 mb-12">
           <p className="text-gray-600 text-sm">{rating}</p>
           <ul className="flex ml-2">
-            {Array(fullStars)
+            {Array(Math.floor(rating))
               .fill(null)
               .map((_, index) => (
                 <li key={index} className="mr-1">
@@ -89,7 +74,7 @@ const RestaurantInfo: React.FC<Props> = ({
                   </svg>
                 </li>
               ))}
-            {hasHalfStar && (
+            {rating % 1 >= 0.5 && (
               <li className="mr-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -107,11 +92,6 @@ const RestaurantInfo: React.FC<Props> = ({
             )}
           </ul>
         </div>
-
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     </div>
   );
