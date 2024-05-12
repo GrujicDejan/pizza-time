@@ -4,6 +4,7 @@ import { addRestuarantReview } from "../pages/api/addRestuarantReview";
 interface AddReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmitSuccess: () => void;
 }
 
 interface FormData {
@@ -18,7 +19,7 @@ interface FormData {
 const today = new Date();
 const defaultDate = today.toISOString().split("T")[0];
 
-const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
+const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose, onSubmitSuccess }) => {
   const initialFormData: FormData = {
     restaurantName: "",
     pizzaType: "",
@@ -37,7 +38,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
     if (name === "rating") {
       // Provera da li je uneta vrednost validan decimalni broj između 1 i 5
       const floatValue = parseFloat(value);
-      if (value !== ' ' && floatValue >= 0 && floatValue <= 5) {
+      if (floatValue >= 0 && floatValue <= 5) {
         setFormData({ ...formData, [name]: value });
       } else {
         setFormData({...formData, [name]: ""})
@@ -52,42 +53,18 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     try {
-      // const response = await fetch("/api/addRestuarantReview", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
+      const response = await addRestuarantReview({
+        method: 'POST',
+        body: formData,
+      });
+      
+      console.log(response);
+      setFormData(initialFormData);
+      onClose();
+      onSubmitSuccess();
 
-      const response = async () => {
-        try {
-            const res = await addRestuarantReview({
-                method: 'POST',
-                body: formData,
-            });
-            console.log(res);
-            setFormData(initialFormData);
-            onClose();
-        } catch (error) {
-            console.error('Error adding review:', error);
-        }
-    };
-        
-    response();
-    
-
-      // if (response) {
-      //   // Uspešno dodavanje recenzije
-      //   console.log("Review added successfully!");
-      //   setFormData(initialFormData);
-      //   onClose();
-      // } else {
-      //   // Greška prilikom dodavanja recenzije
-      //   console.error("Failed to add review", response);
-      // }
     } catch (error) {
-      console.error("Error adding review:", error);
+      console.error('Error adding review:', error);
     }
   };
 
@@ -249,3 +226,6 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default AddReviewModal;
+
+
+

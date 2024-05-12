@@ -6,6 +6,7 @@ import SwiperComponent from "./components/swiper";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -13,6 +14,14 @@ export default function Home() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const refreshData = () => {
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
+
+  const onSubmitSuccess = () => {
+    refreshData();
   };
 
   return (
@@ -32,9 +41,13 @@ export default function Home() {
           Add New Review
         </button>
 
-        <SwiperComponent />
+        <SwiperComponent key={refreshKey} />
 
-        <AddReviewModal isOpen={isModalOpen} onClose={closeModal} />
+        <AddReviewModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSubmitSuccess={onSubmitSuccess}
+        />
       </div>
     </div>
   );
