@@ -22,7 +22,7 @@ View Ratings: View the ratings you've assigned to different pizzas to keep track
 ## Accessing the Live Application
 The Pizza-Time website is live and hosted on Vercel. You can access it by visiting the following URL:
 
-[Pizza-Time Website](https://your-vercel-app-url.vercel.app)
+[Pizza-Time Website](https://pizza-time-ten.vercel.app/)
 
 Click the link above or copy-paste it into your web browser to access the live version of the Pizza-Time website.
 
