@@ -3,7 +3,7 @@ import { RestaurantReview } from "../../components/RestaurantReview";
 
 const fetchRestaurantReviews = async (): Promise<RestaurantReview[] | null> => {
   try {
-    const { data, error } = await supabase.from("Restaurant").select("*");
+    const { data, error } = await supabase.from("pizza_time").select("*");
     if (error) {
       throw error;
     }
